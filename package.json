@@ -4,7 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js --verbose",
+    "test": "nyc --reporter=html --reporter=text ava  --verbose",
     "test:watch": "ava tests/**/*.js --verbose --watch",
     "coveralls": "nyc report --reporter=text-lcov | coveralls",
     "ava": "ava --verbose",
@@ -13,7 +13,8 @@
   "ava": {
     "require": [
       "@babel/register"
-    ]
+    ],
+    "files": ["tests/**/*.js", "!tests/testData.js"]
   },
   "repository": {
     "type": "git",
@@ -28,12 +29,14 @@
   "homepage": "https://github.com/codingpop/popflix-backend#readme",
   "dependencies": {
     "babel-cli": "^6.26.0",
+    "babel-plugin-transform-class-properties": "^6.24.1",
     "babel-plugin-transform-object-rest-spread": "^6.26.0",
     "babel-preset-env": "^1.7.0",
     "bcryptjs": "^2.4.3",
     "celebrate": "^7.0.6",
     "dotenv": "^5.0.1",
     "express": "^4.16.3",
+    "joi-html-input": "^1.1.5",
     "jsonwebtoken": "^8.2.1",
     "mongoose": "^5.1.1",
     "mongoose-unique-validator": "^2.0.1"
@@ -42,12 +45,15 @@
     "@babel/core": "^7.0.0-beta.47",
     "@babel/register": "^7.0.0-beta.47",
     "ava": "1.0.0-beta.4",
+    "babel-eslint": "^8.2.3",
     "coveralls": "^3.0.1",
     "eslint": "^4.19.1",
     "eslint-config-airbnb-base": "^12.1.0",
+    "eslint-plugin-babel": "^5.1.0",
     "eslint-plugin-import": "^2.11.0",
     "faker": "^4.1.0",
     "nyc": "^11.8.0",
-    "pm2": "^2.10.3"
+    "pm2": "^2.10.3",
+    "supertest": "^3.1.0"    
   }
 }

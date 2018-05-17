@@ -1,19 +1,11 @@
 import test from 'ava';
-import faker from 'faker';
 import { Types } from 'mongoose';
 
 import '../../config';
 import Movie from '../../models/Movie';
+import { movie } from '../testData';
 
-const movie = {
-  title: faker.lorem.words(),
-  synopsis: faker.lorem.words().repeat(5),
-  poster: faker.image.image(),
-  thumbnail: faker.image.image(),
-  views: faker.random.number(),
-};
-
-test('Movie model - creates a new movie', async (t) => {
+test('Creates a new movie', async (t) => {
   const newMovie = await Movie.create(movie);
 
   t.true(Types.ObjectId.isValid(newMovie._id));

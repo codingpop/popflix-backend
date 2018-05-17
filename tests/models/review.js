@@ -14,7 +14,7 @@ const review = {
   rating: 4,
 };
 
-test('Review model - creates a new movie', async (t) => {
+test('Creates a new movie', async (t) => {
   const newReview = await Review.create(review);
 
   t.true(Types.ObjectId.isValid(newReview._id));
