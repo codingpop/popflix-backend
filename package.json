@@ -4,8 +4,9 @@
   "description": "",
   "main": "index.js",
   "scripts": {
-    "test": "ava tests/**/*.js --verbose",
+    "test": "nyc --reporter=html --reporter=text ava tests/**/*.js --verbose",
     "test:watch": "ava tests/**/*.js --verbose --watch",
+    "coverage": "nyc report --reporter=text-lcov | coveralls",
     "ava": "ava --verbose",
     "dev": "pm2 start app.js --watch --interpreter babel-node"
   },
