@@ -3,7 +3,6 @@ import faker from 'faker';
 import { Types } from 'mongoose';
 
 import '../../config';
-
 import User from '../../models/User';
 
 const user = {

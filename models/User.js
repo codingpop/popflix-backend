@@ -1,18 +1,17 @@
-import mongoose from 'mongoose';
+import mongoose, { Schema } from 'mongoose';
 import bcrypt from 'bcryptjs';
-
-const { Schema } = mongoose;
+import uniqueValidator from 'mongoose-unique-validator';
 
 const userSchema = Schema({
   firstName: {
     type: String,
-    required: [true, 'Please enter first name'],
-    minLength: 2,
-    maxLength: 20,
+    required: true,
+    minlength: 2,
+    maxlength: 20,
   },
   lastName: {
     type: String,
-    required: [true, 'Please enter last name'],
+    required: true,
     minlength: 2,
     maxlength: 20,
   },
@@ -25,18 +24,20 @@ const userSchema = Schema({
   email: {
     type: String,
     unique: true,
-    match: [/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/, 'Please enter a valid email'],
+    match: /^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
   },
   password: {
     type: String,
-    match: [/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/, 'Password must contain, at least, 8 characters, and include at least, 1 lowercase letter, 1 uppercase letter, and 1 special character'],
+    match: /^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/,
   },
   phoneNumber: {
     type: String,
-    required: [true, 'Please enter phone number'],
+    required: true,
     unique: true,
   },
 });
+
+userSchema.plugin(uniqueValidator);
 
 userSchema.pre('save', async function hashPassword(next) {
   this.password = await bcrypt.hash(this.password, 10);
