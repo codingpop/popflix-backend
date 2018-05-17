@@ -20,8 +20,6 @@ class AppController {
    * @param {Object} res - Response object
    * @param {function} next - Pass execution to the next middleware
    *
-   * @param {}
-   *
    * @returns {void}
    */
   create = async (req, res, next) => {

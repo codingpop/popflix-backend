@@ -66,13 +66,12 @@ class AuthController {
             token: this.dependencies.createToken(req, user),
           });
         } else {
-          next(this.dependencies
-            .composeError('AuthenticationError', 'Incorrect credentials'));
+          throw this.dependencies
+            .composeError('AuthenticationError', 'Incorrect credentials');
         }
       } else {
-        next(this
-          .dependencies
-          .composeError('NotFoundError', 'Email is not registered'));
+        throw this.dependencies
+          .composeError('NotFoundError', 'Email is not registered');
       }
     } catch (err) {
       next(err);

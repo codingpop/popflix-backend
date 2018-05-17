@@ -1,7 +1,7 @@
 import { isCelebrate } from 'celebrate';
 
 /**
- * @class ErrorController
+ * @classdesc ErrorController
  */
 class ErrorController {
   /**

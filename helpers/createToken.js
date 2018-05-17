@@ -10,14 +10,10 @@ import config from '../config';
  *
  * @returns {string} - JSON web token
  */
-const createToken = (req, payload) => {
-  req.user = payload;
-
-  return jwt.sign(
-    payload,
-    config.jwtSecret,
-    { expiresIn: config.jwtExpiry },
-  );
-};
+const createToken = (req, payload) => jwt.sign(
+  payload,
+  config.jwtSecret,
+  { expiresIn: config.jwtExpiry },
+);
 
 export default createToken;
