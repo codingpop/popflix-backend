@@ -1,3 +1,5 @@
+import bcrypt from 'bcryptjs';
+
 /**
  * @classdesc AuthController
  */
@@ -54,7 +56,7 @@ class AuthController {
       const existingUser = await this.dependencies.model.findOne({ email });
 
       if (existingUser) {
-        const passwordMatches = await this.dependencies.bcrypt
+        const passwordMatches = await bcrypt
           .compare(password, existingUser.password);
 
         if (passwordMatches) {

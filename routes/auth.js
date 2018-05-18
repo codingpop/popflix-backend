@@ -1,5 +1,4 @@
-import express from 'express';
-import bcrypt from 'bcryptjs';
+import { Router } from 'express';
 import { celebrate, errors } from 'celebrate';
 
 import AuthController from '../controllers/AuthController';
@@ -9,13 +8,12 @@ import createToken from '../helpers/createToken';
 import composeError from '../helpers/composeError';
 import { register, login } from '../utils/joiSchemas';
 
-const auth = express.Router();
+const auth = Router();
 
 const authController = new AuthController({
   model: User,
   excludeProperties,
   createToken,
-  bcrypt,
   composeError,
 });
 

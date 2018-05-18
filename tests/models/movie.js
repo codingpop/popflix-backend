@@ -11,7 +11,5 @@ test('Creates a new movie', async (t) => {
   t.true(Types.ObjectId.isValid(newMovie._id));
   t.is(newMovie.title, movie.title);
   t.is(newMovie.synopsis, movie.synopsis);
-  t.is(newMovie.poster, movie.poster);
   t.is(newMovie.views, movie.views);
-  t.is(newMovie.thumbnail, movie.thumbnail);
 });

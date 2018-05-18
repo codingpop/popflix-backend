@@ -12,7 +12,8 @@ export const user = {
 export const movie = {
   title: faker.lorem.words(),
   synopsis: faker.lorem.words().repeat(5),
-  poster: faker.image.image(),
-  thumbnail: faker.image.image(),
   views: faker.random.number(),
+  duration: faker.random.number(),
+  publicId: faker.random.uuid(),
+  secureUrl: faker.internet.url(),
 };

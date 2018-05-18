@@ -4,5 +4,8 @@
         "no-underscore-dangle": 0
     },
     "parser": "babel-eslint",
-    "plugins": ["babel"]
+    "plugins": ["babel"],
+    "globals": {
+        "__basedir": true
+    }
 }

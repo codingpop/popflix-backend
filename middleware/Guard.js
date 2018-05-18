@@ -35,7 +35,7 @@ class Guard {
           throw composeError('AuthorizationError', 'Invalid token');
         }
       } else {
-        throw composeError('Authorization error', 'Token not found');
+        throw composeError('AuthorizationError', 'Token not found');
       }
     } catch (err) {
       next(err);
@@ -54,8 +54,8 @@ class Guard {
    * @returns {void}
    */
   static admin(req, res, next) {
-    if (req.user !== 'admin') {
-      next('AuthorizationError', 'Only admin allowed');
+    if (req.user.role !== 'admin') {
+      next(composeError('AuthorizationError', 'Only admin allowed'));
     } else {
       next();
     }
