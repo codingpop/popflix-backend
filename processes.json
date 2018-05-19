@@ -1,0 +1,17 @@
+{
+  "apps": [
+    {
+      "name": "PopFlix",
+      "script": "./app.js",
+      "watch": true,
+      "ignore_watch": ["node_modules", "uploads", ".git/index.lock"],
+      "interpreter": "babel-node",
+      "env": {
+        "NODE_ENV": "development"
+      },
+      "env_production": {
+        "NODE_ENV": "production"
+      }
+    }
+  ]
+}

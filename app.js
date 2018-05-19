@@ -1,26 +1,24 @@
 import express from 'express';
-import faker from 'faker';
 
 import config from './config';
-
-import User from './models/User';
+import routes from './routes';
+import ErrorController from './controllers/ErrorController';
 
 const app = express();
+global.__basedir = __dirname;
 
 app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 
-app.get('/', async (req, res) => {
+app.use('/api/v1/users', routes.auth);
+app.use('/api/v1/movies', routes.movie);
 
-  const newUser = await User.create({
-    firstName: faker.name.firstName(),
-    lastName: faker.name.lastName(),
-    email: faker.internet.email(),
-    avatar: faker.image.avatar(),
-    phoneNumber: faker.phone.phoneNumber(),
-    password: faker.internet.password(),
-  })
-  res.status(200).json({ message: newUser });
+app.use(ErrorController.handle);
+
+app.get('/se', async (req, res) => {
+  res.status(200).json({ message: 'Welcome!' });
 });
 
 app.listen(config.port);
+
+export default app;
