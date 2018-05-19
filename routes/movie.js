@@ -1,7 +1,7 @@
 import { Router } from 'express';
 import { celebrate, errors } from 'celebrate';
 
-import { uploadMovie, fetchAll } from '../utils/joiSchemas';
+import { uploadMovie } from '../utils/joiSchemas';
 import MovieController from '../controllers/MovieController';
 import composeError from '../helpers/composeError';
 import Guard from '../middleware/Guard';
@@ -27,8 +27,13 @@ movie.post(
 movie.get(
   '/',
   Guard.auth,
-  celebrate(fetchAll),
   movieController.fetchAll,
+);
+
+movie.get(
+  '/:id',
+  Guard.auth,
+  movieController.fetchOne,
 );
 
 movie.use(errors);

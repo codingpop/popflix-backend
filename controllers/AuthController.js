@@ -30,6 +30,12 @@ class AuthController {
       const user = this.dependencies
         .excludeProperties(newUser.toObject(), ['password']);
 
+      this.dependencies.mailer({
+        to: user.email,
+        subject: 'Welcome to PopFlix',
+        html: '<strong>You are welcome</strong>',
+      });
+
       res.status(201).json({
         user,
         token: this.dependencies.createToken(req, user),
