@@ -1,20 +1,11 @@
 import test from 'ava';
-import faker from 'faker';
 import { Types } from 'mongoose';
 
 import '../../config';
 import User from '../../models/User';
+import { user } from '../testData';
 
-const user = {
-  firstName: faker.name.firstName(),
-  lastName: faker.name.lastName(),
-  email: faker.internet.email(),
-  avatar: faker.image.avatar(),
-  phoneNumber: faker.phone.phoneNumber(),
-  password: `${faker.internet.password()},@A1u`,
-};
-
-test('User model - creates a new user', async (t) => {
+test('Creates a new user', async (t) => {
   const newUser = await User.create(user);
 
   t.is(newUser.firstName, user.firstName);

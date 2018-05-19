@@ -13,12 +13,26 @@ const movieSchema = Schema({
     minlength: 20,
     maxlength: 200,
   },
-  poster: {
+  views: {
+    type: Number,
+    default: 0,
+  },
+  secureUrl: {
     type: String,
     required: true,
   },
-  views: Number,
-  thumbnail: String,
+  publicId: {
+    type: String,
+    required: true,
+  },
+  duration: {
+    type: Number,
+    required: true,
+  },
+  uploadedAt: {
+    type: Date,
+    default: Date.now,
+  },
 });
 
 export default mongoose.model('Movie', movieSchema);
