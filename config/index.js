@@ -14,6 +14,7 @@ const config = {
   apiSecret: process.env.CLOUDINARY_API_SECRET,
   environment: process.env.NODE_ENV,
   testDbUrl: process.env.DB_URL_TEST,
+  sendGridApiKey: process.env.SENDGRID_API_KEY,
 };
 
 

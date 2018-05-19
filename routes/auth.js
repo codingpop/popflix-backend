@@ -7,6 +7,7 @@ import excludeProperties from '../helpers/excludeProperties';
 import createToken from '../helpers/createToken';
 import composeError from '../helpers/composeError';
 import { register, login } from '../utils/joiSchemas';
+import { sendOne } from '../helpers/mailer';
 
 const auth = Router();
 
@@ -15,6 +16,7 @@ const authController = new AuthController({
   excludeProperties,
   createToken,
   composeError,
+  mailer: sendOne,
 });
 
 auth.post('/register', celebrate(register), authController.register);

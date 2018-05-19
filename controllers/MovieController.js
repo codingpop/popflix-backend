@@ -43,6 +43,7 @@ class MovieController extends AppController {
         ));
 
         child.send({
+          uploader: req.user.email,
           file: req.file,
           info: req.body,
         });

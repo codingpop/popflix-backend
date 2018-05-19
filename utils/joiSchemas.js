@@ -8,9 +8,6 @@ const string = Joi.string();
 const phoneNumber = Joi.string();
 const email = Joi.string().regex(/^(([^<>()[\]\\.,;:\s@"]+(\.[^<>()[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/);
 const password = Joi.string().regex(/^(?=.*[a-z])(?=.*[A-Z])(?=.*[0-9])(?=.*[!@#$%^&*])(?=.{8,})/);
-const headers = Joi.object().keys({
-  token: string.required(),
-});
 
 export const register = {
   body: Joi.object().keys({
@@ -35,8 +32,3 @@ export const uploadMovie = {
     synopsis: string.min(20).max(200).required(),
   }),
 };
-
-export const fetchAll = {
-  headers,
-};
-
