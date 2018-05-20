@@ -32,3 +32,12 @@ export const uploadMovie = {
     synopsis: string.min(20).max(200).required(),
   }),
 };
+
+export const likeMovie = {
+  body: Joi.object().keys({
+    like: Joi.boolean().required(),
+  }),
+  params: Joi.object().keys({
+    movieId: string.required(),
+  }),
+};
