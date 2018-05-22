@@ -1,7 +1,9 @@
 import { Joi as joi } from 'celebrate';
 import htmlInput from 'joi-html-input';
+import objectId from 'joi-objectid';
 
 const Joi = joi.extend(htmlInput);
+Joi.objectId = objectId(Joi);
 
 const name = Joi.string().min(2).max(50);
 const string = Joi.string();
@@ -38,6 +40,6 @@ export const likeMovie = {
     like: Joi.boolean().required(),
   }),
   params: Joi.object().keys({
-    movieId: string.required(),
+    movieId: Joi.objectId().required(),
   }),
 };

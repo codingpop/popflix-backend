@@ -4,11 +4,14 @@ import { celebrate, errors } from 'celebrate';
 import { uploadMovie, likeMovie } from '../utils/joiSchemas';
 import MovieController from '../controllers/MovieController';
 import LikeController from '../controllers/LikeController';
+import CommentController from '../controllers/CommentController';
 import composeError from '../helpers/composeError';
 import Guard from '../middleware/Guard';
 import multer from '../middleware/multer';
 import Movie from '../models/Movie';
 import Like from '../models/Like';
+import Comment from '../models/Comment';
+import isExist from '../helpers/isExist';
 
 const movie = Router();
 
@@ -19,8 +22,19 @@ const movieController = new MovieController({
 
 const likeController = new LikeController({
   model: Like,
+  isExist,
+  composeError,
 });
 
+const commentController = new CommentController({
+  model: Comment,
+  isExist,
+  composeError,
+});
+
+/**
+ * Movie routes
+ */
 movie.post(
   '/',
   Guard.auth,
@@ -56,6 +70,15 @@ movie.get(
   '/:movieId/likes',
   Guard.auth,
   likeController.fetchAll,
+);
+
+/**
+ * Comment Routes
+ */
+movie.post(
+  '/:movieId/comments',
+  Guard.auth,
+  commentController.commentMovie,
 );
 
 movie.use(errors);

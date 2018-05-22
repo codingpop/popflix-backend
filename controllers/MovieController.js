@@ -49,7 +49,7 @@ class MovieController extends AppController {
         });
 
         res.status(202).json({
-          message: 'Movie is being processed. You will be notified once processing is complete',
+          message: 'Movie is being processed. You will be notified once processing is complete.',
         });
       }
     } catch (err) {

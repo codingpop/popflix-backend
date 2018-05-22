@@ -35,4 +35,10 @@ const movieSchema = Schema({
   },
 });
 
+movieSchema.virtual('comments', {
+  ref: 'Comment',
+  localField: '_id',
+  foreignField: 'movieId',
+});
+
 export default mongoose.model('Movie', movieSchema);

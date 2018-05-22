@@ -14,6 +14,7 @@ const likeSchema = Schema({
   like: {
     type: Boolean,
     required: true,
+    default: false,
   },
 });
 
