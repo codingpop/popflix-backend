@@ -1,8 +1,6 @@
 import multer from 'multer';
 import composeError from '../helpers/composeError';
 
-let fileType;
-
 export default multer({
   dest: 'uploads/',
   fileFilter: (req, { mimetype }, callback) => {
@@ -15,12 +13,9 @@ export default multer({
       ), false);
     }
 
-    fileType = mimetype;
-
     return callback(null, true);
   },
   limits: {
-    // fileSize: fileType === 'video/mp4' ? ((1024 ** 2) * 100) : ((1024 ** 2) * 2),
     fileSize: (1024 ** 2) * 100,
   },
 });

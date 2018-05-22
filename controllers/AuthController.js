@@ -26,11 +26,17 @@ class AuthController {
    */
   register = async (req, res, next) => {
     try {
-      const newUser = await this.dependencies.model.create(req.body);
-      const user = this.dependencies
-        .excludeProperties(newUser.toObject(), ['password']);
+      const {
+        model,
+        excludeProperties,
+        mailer,
+        createToken,
+      } = this.dependencies;
 
-      this.dependencies.mailer({
+      const newUser = await model.create(req.body);
+      const user = excludeProperties(newUser.toObject(), ['password']);
+
+      mailer({
         to: user.email,
         subject: 'Welcome to PopFlix',
         html: '<strong>You are welcome</strong>',
@@ -38,7 +44,7 @@ class AuthController {
 
       res.status(201).json({
         user,
-        token: this.dependencies.createToken(req, user),
+        token: createToken(req, user),
       });
     } catch (err) {
       next(err);
@@ -59,27 +65,31 @@ class AuthController {
   login = async (req, res, next) => {
     try {
       const { email, password } = req.body;
-      const existingUser = await this.dependencies.model.findOne({ email });
+      const {
+        model,
+        excludeProperties,
+        composeError,
+        createToken,
+      } = this.dependencies;
+
+      const existingUser = await model.findOne({ email });
 
       if (existingUser) {
         const passwordMatches = await bcrypt
           .compare(password, existingUser.password);
 
         if (passwordMatches) {
-          const user = this.dependencies
-            .excludeProperties(existingUser.toObject(), ['password']);
+          const user = excludeProperties(existingUser.toObject(), ['password']);
 
           res.status(200).json({
             user,
-            token: this.dependencies.createToken(req, user),
+            token: createToken(req, user),
           });
         } else {
-          throw this.dependencies
-            .composeError('AuthenticationError', 'Incorrect credentials');
+          throw composeError('AuthenticationError', 'Incorrect credentials');
         }
       } else {
-        throw this.dependencies
-          .composeError('NotFoundError', 'Email is not registered');
+        throw composeError('NotFoundError', 'Email is not registered');
       }
     } catch (err) {
       next(err);

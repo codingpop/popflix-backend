@@ -1,7 +1,9 @@
 import { Joi as joi } from 'celebrate';
 import htmlInput from 'joi-html-input';
+import objectId from 'joi-objectid';
 
 const Joi = joi.extend(htmlInput);
+Joi.objectId = objectId(Joi);
 
 const name = Joi.string().min(2).max(50);
 const string = Joi.string();
@@ -30,5 +32,23 @@ export const uploadMovie = {
   body: Joi.object().keys({
     title: string.min(3).max(80).required(),
     synopsis: string.min(20).max(200).required(),
+  }),
+};
+
+export const getOneMovie = {
+  params: Joi.object().keys({
+    id: Joi.objectId().required(),
+  }),
+};
+
+export const likeMovie = {
+  params: Joi.object().keys({
+    movieId: Joi.objectId().required(),
+  }),
+};
+
+export const postComment = {
+  params: Joi.object().keys({
+    movieId: Joi.objectId().required(),
   }),
 };

@@ -35,7 +35,7 @@ class MovieController extends AppController {
 
       if (!movie) {
         throw this.dependencies
-          .composeError('BadRequest', 'SNo movie uploaded');
+          .composeError('BadRequest', 'No movie uploaded');
       } else {
         const child = fork(path.join(
           __basedir,
@@ -49,7 +49,7 @@ class MovieController extends AppController {
         });
 
         res.status(202).json({
-          message: 'Movie is being processed. You will be notified once processing is complete',
+          message: 'Movie is being processed. You will be notified once processing is complete.',
         });
       }
     } catch (err) {
