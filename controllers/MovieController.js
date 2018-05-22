@@ -35,7 +35,7 @@ class MovieController extends AppController {
 
       if (!movie) {
         throw this.dependencies
-          .composeError('BadRequest', 'SNo movie uploaded');
+          .composeError('BadRequest', 'No movie uploaded');
       } else {
         const child = fork(path.join(
           __basedir,

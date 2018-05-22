@@ -35,10 +35,19 @@ export const uploadMovie = {
   }),
 };
 
-export const likeMovie = {
-  body: Joi.object().keys({
-    like: Joi.boolean().required(),
+export const getOneMovie = {
+  params: Joi.object().keys({
+    id: Joi.objectId().required(),
   }),
+};
+
+export const likeMovie = {
+  params: Joi.object().keys({
+    movieId: Joi.objectId().required(),
+  }),
+};
+
+export const postComment = {
   params: Joi.object().keys({
     movieId: Joi.objectId().required(),
   }),

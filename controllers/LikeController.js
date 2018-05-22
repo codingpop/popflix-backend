@@ -16,7 +16,17 @@ class LikeController extends AppController {
     this.dependencies = dependencies;
   }
 
-
+  /**
+   * @desc Like a movie
+   *
+   * @callback function
+   *
+   * @param {Object} req - Request object
+   * @param {Object} res - Response object
+   * @param {function} next - Pass execution to the next middleware
+   *
+   * @returns {void}
+   */
   likeMovie = async (req, res, next) => {
     try {
       const { _id } = req.user;
@@ -25,29 +35,42 @@ class LikeController extends AppController {
       const movieExists = await isExist(movieId, Movie);
 
       if (movieExists) {
-        const data = await model.update(
-          { userId: _id, movieId },
-          { ...req.body, movieId, userId: _id },
-          { upsert: true, setDefaultsOnInsert: true },
-        );
+        const data = await model.create({ like: true, movieId, userId: _id });
 
-        if (data.upserted) {
-          res.status(201).json({
-            data: {
-              movieId,
-              ...req.body,
-            },
-          });
-        } else {
-          res.status(200).json({
-            data: {
-              movieId,
-              ...req.body,
-            },
-          });
-        }
+        res.status(200).json({
+          data,
+        });
       } else {
         throw composeError('BadRequest', 'Movie does not exist');
+      }
+    } catch (err) {
+      next(err);
+    }
+  }
+
+  /**
+   * @desc Unlike a movie
+   *
+   * @callback function
+   *
+   * @param {Object} req - Request object
+   * @param {Object} res - Response object
+   * @param {function} next - Pass execution to the next middleware
+   *
+   * @returns {void}
+   */
+  unlikeMovie = async (req, res, next) => {
+    try {
+      const { _id } = req.user;
+      const { movieId } = req.params;
+      const { model, composeError } = this.dependencies;
+
+      const data = await model.findOneAndRemove({ movieId, userId: _id });
+
+      if (data) {
+        res.sendStatus(204);
+      } else {
+        throw composeError('ForbiddenError', 'This movie never existed, or you never liked it');
       }
     } catch (err) {
       next(err);

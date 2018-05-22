@@ -1,7 +1,12 @@
 import { Router } from 'express';
 import { celebrate, errors } from 'celebrate';
 
-import { uploadMovie, likeMovie } from '../utils/joiSchemas';
+import {
+  uploadMovie,
+  likeMovie,
+  getOneMovie,
+  postComment,
+} from '../utils/joiSchemas';
 import MovieController from '../controllers/MovieController';
 import LikeController from '../controllers/LikeController';
 import CommentController from '../controllers/CommentController';
@@ -53,6 +58,7 @@ movie.get(
 movie.get(
   '/:id',
   Guard.auth,
+  celebrate(getOneMovie),
   movieController.fetchOne,
 );
 
@@ -69,7 +75,15 @@ movie.post(
 movie.get(
   '/:movieId/likes',
   Guard.auth,
+  celebrate(likeMovie),
   likeController.fetchAll,
+);
+
+movie.delete(
+  '/:movieId/likes',
+  Guard.auth,
+  celebrate(likeMovie),
+  likeController.unlikeMovie,
 );
 
 /**
@@ -78,6 +92,7 @@ movie.get(
 movie.post(
   '/:movieId/comments',
   Guard.auth,
+  celebrate(postComment),
   commentController.commentMovie,
 );
 

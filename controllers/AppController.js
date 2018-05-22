@@ -47,7 +47,7 @@ class AppController {
     try {
       const data = await this.dependencies.model.find();
 
-      res.status(200).json({ data });
+      res.status(200).json({ data, count: data.length });
     } catch (err) {
       next(err);
     }

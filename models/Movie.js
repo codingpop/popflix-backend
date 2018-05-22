@@ -41,4 +41,20 @@ movieSchema.virtual('comments', {
   foreignField: 'movieId',
 });
 
+movieSchema.virtual('likes', {
+  ref: 'Like',
+  localField: '_id',
+  foreignField: 'movieId',
+});
+
+movieSchema.pre('find', function () { // eslint-disable-line func-names
+  this.populate('likes');
+});
+
+movieSchema.pre('findOne', function () { // eslint-disable-line func-names
+  this.populate('comments');
+});
+
+movieSchema.set('toJSON', { virtuals: true });
+
 export default mongoose.model('Movie', movieSchema);

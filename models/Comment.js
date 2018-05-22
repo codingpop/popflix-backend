@@ -1,6 +1,6 @@
 import mongoose, { Schema } from 'mongoose';
 
-const commentSchema = Schema({
+const commentSchema = new Schema({
   movieId: {
     type: Schema.Types.ObjectId,
     ref: 'Movie',
